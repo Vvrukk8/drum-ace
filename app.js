@@ -354,5 +354,19 @@
   });
 
   setTarget(120);
+
+  const params = new URLSearchParams(location.search);
+  const full = params.get("full") === "ace";
+  const TRIAL_MS = 2 * 60 * 1000;
+  if (!full) {
+    setTimeout(() => {
+      const wall = document.createElement("div");
+      wall.style.cssText = "position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.82);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;";
+      wall.innerHTML = '<h2 style="margin:0 0 8px">Trial over</h2><p>2 free minutes. Full Drum Ace is $9.</p><a href="sell.html" style="color:#041;background:#22c55e;font-weight:800;text-decoration:none;padding:12px 18px;border-radius:6px">Pay w paypal</a>';
+      document.body.appendChild(wall);
+      if (listening && micBtn) micBtn.click();
+    }, TRIAL_MS);
+  }
+
   clearLeds();
 })();
